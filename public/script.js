@@ -1,5 +1,5 @@
 // Make a request for all the items
-// QUESTION: how does axios know to call the items.mjs controller?
+// axios sends a normal GET request to express in ./routes.mjs
 axios
   .get('/items')
   .then((response) => {

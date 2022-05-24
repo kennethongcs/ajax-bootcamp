@@ -9,4 +9,12 @@ export default function bindRoutes(app) {
   app.get('/newroute', (req, res) => {
     res.render('home');
   });
+
+  app.get('/', (req, res) => {
+    res.render('index');
+  });
+
+  app.get('/add', (req, res) => {
+    res.render('add');
+  });
 }
