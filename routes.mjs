@@ -1,17 +1,11 @@
 import db from './models/index.mjs';
 import initItemsController from './controllers/items.mjs';
-import { response } from 'express';
 
 export default function bindRoutes(app) {
-  const ItemsController = initItemsController(db);
-  app.get('/items', ItemsController.index);
-
-  app.get('/newroute', (req, res) => {
-    res.render('home');
-  });
-
+  const itemsController = initItemsController(db);
+  app.get('/items', itemsController.index);
+  app.get('/item/:id', itemsController.findItem);
   app.get('/', (req, res) => {
-    // renders a html file with button
     res.render('index');
   });
 }

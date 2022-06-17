@@ -1,25 +1,41 @@
-const getDescription = async () => {
-  const response = await axios.get('/items');
-  const data = response.data.items;
+const getDescription = async (id) => {
+  const response = await axios.get(`/item/${id}`);
+  document.querySelector('.demo').innerText = `${response.data.description}`;
+};
 
-  for (let i = 0; i < data.length; i += 1) {
-    document.querySelector('.demo').innerHTML += `${data[i].description}`;
-  }
+const formatButton = (item) => {
+  const button = document.createElement('button');
+  button.setAttribute('class', 'items');
+  button.innerHTML = item.name;
+  button.value = item.id;
+
+  button.addEventListener('click', () => {
+    getDescription(item.id);
+  });
+  document.querySelector('.main').appendChild(button);
+};
+
+const setPara = (item) => {
+  const para = document.createElement('p');
+  para.innerText = item.name;
+  document.querySelector('.main').appendChild(para);
 };
 
 const axiosFunction = async () => {
   const response = await axios.get('/items');
 
-  for (let i = 0; i < response.data.items.length; i += 1) {
-    document.querySelector(
-      '.demo'
-    ).innerHTML += `<p> ${response.data.items[i].name} </p> 
-    <input type="button" class="button" onclick="${response.data.items[i].id}" value="Description for: ${response.data.items[i].name}" /> <hr>`;
-  }
+  const { items } = response.data;
+  // for (let i = 0; i < response.data.items.length; i += 1) {
+  //   document.querySelector('.demo').innerHTML += formatButton(items);
 
-  document.querySelector('.button2').addEventListener('click', () => {
-    getDescription();
+  items.forEach((item) => {
+    setPara(item);
+    formatButton(item);
   });
+
+  /*
+    `<p class=row-${i}> ${response.data.items[i].name}  </p> 
+    <input type="button" class="button2" onclick="${response.data.items[i].id}" value="Description for: ${response.data.items[i].name}" /> <hr>`;*/
 };
 
 document.querySelector('.button1').addEventListener('click', () => {
